@@ -1,4 +1,3 @@
-from logging import config
 import yaml
 import csv
 from typing import List
@@ -27,32 +26,26 @@ def read_instructions(instruction_path: str) -> List[GraphInstruction]:
             )
             row["legends"] = (
                 {
-                    k: v
-                    for k, v in (item.split(":") for item in row["legend"].split("."))
+                    k.strip(): v.strip()
+                    for item in row["legends"].strip("()").split(")(")
+                    for k, v in [item.split(":")]
+                    if k and v
                 }
                 if row["legends"]
                 else {}
             )
             row["brackets"] = (
                 [
-                    [list(map(int, b.split(":"))) for b in item.split("]") if b]
-                    for item in row["brackets"].split(".")
+                    [
+                        [part.strip() for part in b.strip("[]").split(":")]
+                        for b in item.split("][")
+                    ]
+                    + [item.split("]")[-1].strip()]
+                    for item in row["brackets"].strip("()").split(")(")
+                    if item
                 ]
                 if row["brackets"]
                 else []
             )
             instructions.append(GraphInstruction(**row))
     return instructions
-
-
-if __name__ == "__main__":
-    import os
-
-    root = os.path.dirname(os.path.dirname(__file__))
-    print(root)
-
-    config_path = os.path.join(root, "config.yml")
-    instruction_path = os.path.join(root, "Inputs/instructions.csv")
-
-    print(read_config(config_path))
-    # print(read_instructions(instruction_path))
