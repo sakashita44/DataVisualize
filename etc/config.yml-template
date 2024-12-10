@@ -20,7 +20,7 @@ figure_height: 6      # 画像の高さ(デフォルト: 3)
 # 箱ひげ図への有意差の表示に関する設定
 show_significance_brackets: True  # 箱ひげ図に有意差を示すかどうか(デフォルト: True)
 brackets_height_ratio: 0.02       # グラフの高さを1としたときのブラケットの高さ割合(デフォルト: 0.02)
-brackets_spacing_ratio: 0.06      # グラフの高さを1としたときのブラケット間隔の割合(デフォルト: 0.06)
+brackets_spacing_ratio: 0.1       # グラフの高さを1としたときのブラケット間隔の割合(デフォルト: 0.1)
 p_mark_font_size: 10              # p値のフォントサイズ(デフォルト: 10)
 
 # 保存時の設定
