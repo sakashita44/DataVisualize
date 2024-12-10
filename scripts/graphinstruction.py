@@ -14,6 +14,6 @@ class GraphInstruction:
     ylim_max: Optional[float]
     xlabel: str
     ylabel: str
-    legend: Dict[str, str]
+    legends: Dict[str, str]
     brackets: List[List]
     bracket_base_y: Optional[float]

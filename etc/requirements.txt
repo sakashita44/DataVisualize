@@ -11,6 +11,8 @@ pyparsing==3.1.4
 python-dateutil==2.9.0.post0
 pytz==2024.2
 PyYAML==6.0.2
+schemeta_splitter @ git+https://github.com/sakashita44/schemeta_splitter.git@efef64f526efc764d4582f727789702abe645652
 seaborn==0.13.2
 six==1.16.0
+trplots @ git+https://github.com/sakashita44/trplots.git@451013a0993f9d3b94a65b48a19418e9ad9eccfe
 tzdata==2024.1

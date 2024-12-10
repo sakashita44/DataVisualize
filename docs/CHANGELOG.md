@@ -15,10 +15,12 @@ and versioning is based on [Semantic Versioning](http://semver.org/).
 
 ### Added in 3.0.0
 
-* graph.pyの箱ひげ図作成関数にjitterを表示する機能を追加
-* graph.pyの箱ひげ図作成関数で平均値マーカ等の設定を追加
+* 箱ひげ図作成関数にjitterを表示する機能を追加
+* 箱ひげ図作成で平均値マーカ等の設定を追加
 
 ### Fixed in 3.0.0
+
+* グラフ生成機能を[trplots](https://github.com/sakashita44/trplots)に分割
 
 ### Changed in 3.0.0
 

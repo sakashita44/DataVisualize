@@ -22,6 +22,9 @@
         * それ以外の場合pyコマンドを適宜pythonコマンド等に置き換えること
     * ライブラリはetc/requirements.txtを参照
 * PowerShell 7.4.6
+* git
+    * githubで配布されているpythonパッケージ[schemeta_splitter](https://github.com/sakashita44/schemeta_splitter), [trplots](https://github.com/sakashita44/trplots)を使用するため
+        * 自身でgithubからダウンロードしてパスを通す場合は不要
 
 ## How to use
 
@@ -96,16 +99,11 @@ Input/にinstructions.csvを配置し，以下の通り記述する．
 
 ```csv
 
-output_name, filename, dtype, graph_type, xlim_min, xlim_max, ylim_min, ylim_max, xlabel, ylabel, legend, brackets, bracket_base_y
-output1, data1.csv, wide, box, , , 20, 50, condition, parameter1, condition1:con1.condition2:con2.condition3:con3, [1:1][1:2]*.[1:1][2:1]**, 70
-output2, data2.csv, long, line, 0, 100, -10, 200, frame, parameter2, True:continue.False:stop.:PGT, ,
+output_name, filename, dtype, graph_type, xlim_min, xlim_max, ylim_min, ylim_max, xlabel, ylabel, legends, brackets, bracket_base_y
+output1, data1.csv, wide, box, , , 20, 50, subject, value, (A:Apple)(B:Banana)(C:Cherry), ([X:A][X:B]*)([X:A][Y:A]**), 70
+output2, data2.csv, long, line, 0, 100, -10, 200, time, value, (True:A)(False:B)(:C), ,
 
 ```
-
-| output_name | filename  | dtype | graph_type | xlim_min | xlim_max | ylim_min | ylim_max | xlabel    | ylabel     | legend                                          | brackets                 | bracket_base_y |
-| ----------- | --------- | ----- | ---------- | -------- | -------- | -------- | -------- | --------- | ---------- | ----------------------------------------------- | ------------------------ |
-| output1     | data1.csv | wide  | box        |          |          | 20       | 50       | condition | parameter1 | condition1:con1.condition2:con2.condition3:con3 | [1:1][1:2]*.[1:1][2:1]** | 70             |
-| output2     | data2.csv | tp    | line       | 0        | 100      | -10      | 200      | frame     | parameter2 | True:continue.False:stop.:PGT                   |                          |                |
 
 このとき各列の指定方法は以下の通り
 
@@ -121,24 +119,23 @@ output2, data2.csv, long, line, 0, 100, -10, 200, frame, parameter2, True:contin
     * bracket_base_yよりも大きい値を指定することを推奨
 1. xlabel: x軸のラベル，$$で囲むことでLaTex数式記法使用可能 (**必須**)
 1. ylabel: y軸のラベル，$$で囲むことでLaTex数式記法使用可能 (**必須**)
-1. legend: 入力csvの列名と凡例の対応表(コロンで対応，ピリオドで区切り)
+1. legends: 入力csvの列名と凡例の対応表(コロンで対応, ()で囲むことで複数指定可能)
     * ここで指定した凡例の順番でグラフに表示される
-    * 例: Trueをcontinue，Falseをstop，空文字をPGTというラベルにしたい場合: True:continue.False:stop.:PGT
+    * 例: TrueをA，FalseをB，空文字をCというラベルにしたい場合: `(True:A)(False:B)(:C)`
     * **注意**: データファイルの列名でTRUE/FALSEを使用している場合，True/Falseとして認識されるので注意
         * Bool型で読み取られた後に文字列に変換されるため
     * **注意**: 変換前のcondition名すべてに対応した凡例を指定する必要がある
     * **注意**: 凡例中にピリオドを含む場合には対応していない
-1. brackets: 有意差の対応表(ピリオド区切りで複数指定可能)
-    * 指定した順に下から追加される
-    * 有意差を示すブラケットの形式は`[group_id:condition_id][group_id:condition_id]mark`のように指定する
+1. brackets: 有意差の対応表(()で囲むことで複数指定可能)
+    * 有意差を示すブラケットの形式は`[main_id1:group1][main_id2:group2]mark`のように指定する
         * ここで各要素の意味は以下の通り
-            * group_id: groupの番号(数字，1始まり)
-            * condition_id: conditionの番号(数字，1始まり)
+            * main_id: メインIDの要素 (main_id列/行の値)
+            * group: グループの要素 (group列/行の値)
             * mark: ブラケット上部に表示する文字
         * このように指定すると，1つ目の[]で指定した条件と2つ目の[]で指定した条件の間に有意差を示すブラケットが表示される
-    * 例: `[1:1][1:2]*.[1:1][2:1]**` は以下の通り
-        1. `[1:1][1:2]*` : 1つ目のgroupの1番目のconditionと1つ目のgroupの2番目のconditionの間に`*`で有意差ブラケットを表示
-        1. `[1:1][2:1]**` : 1つ目のgroupの1番目のconditionと2つ目のgroupの1番目のconditionの間に`**`で有意差ブラケットを表示
+    * 例: `([X:A][X:B]*)([X:A][Y:A]**)` は以下の通り
+        1. `[X:A][X:B]*` : XのA群とXのB群の間に有意差を示す線と*が表示される
+        1. `[X:A][Y:A]**` : XのA群とYのA群の間に有意差を示す線と**が表示される
 1. bracket_base_y: 箱ひげ図の有意差を示す線の最低y座標
     * データの最大値より大きい値を指定することを推奨
 
@@ -146,8 +143,8 @@ exampleファイル，brackets系は[参考画像](img/single_ex_description.png
 
 ### 入力データファイル形式
 
-* 対応形式は[schemeta_splitter](https://github.com/sakashita44/schemeta_splitter?tab=readme-ov-file#%E5%AF%BE%E5%BF%9C%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%BD%A2%E5%BC%8F)の対応ファイル形式に準拠する(行/列名は自由だが，メタデータ部分の列/行数は固定)．
-* gen_graph.pyでは列番号指定でデータをグラフ化するため，列が異なる場合は正しいグラフが出力されない．
+* 対応形式は[schemeta_splitterの対応ファイル形式](https://github.com/sakashita44/schemeta_splitter?tab=readme-ov-file#%E5%AF%BE%E5%BF%9C%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%BD%A2%E5%BC%8F)に準拠する(行/列名は自由だが，メタデータ部分の列/行数は固定)．
+* 本ツールでは列番号指定でデータをグラフ化するため，列が異なる場合は正しいグラフが出力されない.
 
 #### ワイド形式 (wide)
 

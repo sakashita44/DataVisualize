@@ -25,12 +25,12 @@ def read_instructions(instruction_path: str) -> List[GraphInstruction]:
             row["bracket_base_y"] = (
                 float(row["bracket_base_y"]) if row["bracket_base_y"] else None
             )
-            row["legend"] = (
+            row["legends"] = (
                 {
                     k: v
                     for k, v in (item.split(":") for item in row["legend"].split("."))
                 }
-                if row["legend"]
+                if row["legends"]
                 else {}
             )
             row["brackets"] = (
