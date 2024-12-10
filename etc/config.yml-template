@@ -17,6 +17,23 @@ figure_dpi: 100       # 画像の解像度(デフォルト: 100)
 figure_width:  8      # 画像の幅(デフォルト: 4)
 figure_height: 6      # 画像の高さ(デフォルト: 3)
 
+# 箱ひげ図への(外れ値を除いた)平均値の表示に関する設定
+# より詳細な設定を行う場合はscripts/plot_settings.pyのMEAN_PLOT_SETTINGSを編集のこと
+mean_marker_type: +    # 平均値のマーカーの種類(デフォルト: +)
+mean_marker_size: 10   # 平均値のマーカーのサイズ(デフォルト: 10)
+
+# 箱ひげ図の外れ値の表示に関する設定
+# より詳細な設定を行う場合はscripts/plot_settings.pyのOUTLIER_PLOT_SETTINGSを編集のこと
+outlier_marker_type: x   # 外れ値のマーカーの種類(デフォルト: x)
+outlier_marker_size: 10  # 外れ値のマーカーのサイズ(デフォルト: 10)
+
+# 箱ひげ図への個別データのプロットに関する設定
+# より詳細な表示設定を行う場合はscripts/plot_settings.pyのSWARM_PLOT_SETTINGSを編集のこと
+show_individual: True     # 箱ひげ図に個別データをプロットするかどうか(デフォルト: True)
+jitter_marker_type: o     # 個別データのマーカーの種類(デフォルト: o)
+jitter_marker_alpha: 0.7  # 個別データのマーカーの透明度(デフォルト: 0.7)
+jitter_marker_size: 5     # 個別データのマーカーのサイズ(デフォルト: 5)
+
 # 箱ひげ図への有意差の表示に関する設定
 show_significance_brackets: True  # 箱ひげ図に有意差を示すかどうか(デフォルト: True)
 brackets_height_ratio: 0.02       # グラフの高さを1としたときのブラケットの高さ割合(デフォルト: 0.02)
@@ -25,5 +42,5 @@ p_mark_font_size: 10              # p値のフォントサイズ(デフォルト
 
 # 保存時の設定
 show_graph: False     # グラフ保存時に表示するか(デフォルト: False)
-save_describe: True   # 保存時にデータの概要を保存するかどうか(デフォルト: True)
+save_describe: False  # 保存時にデータの概要を保存するかどうか(デフォルト: False)
 save_individual: True # 時系列データのグラフ化時に，個々のデータをプロットした画像を追加で保存するか(デフォルト: True)
