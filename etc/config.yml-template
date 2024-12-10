@@ -1,3 +1,8 @@
+# ファイルパスの設定 (すべてこのツールのルートディレクトリ(init.ps1等が存在するディレクトリ)からの相対パス)
+input_dir: 'Inputs'   # 入力データのディレクトリ
+output_dir: 'Outputs' # 出力データのディレクトリ
+instruction_file: 'Inputs/instructions.csv'  # 処理指示ファイルのパス
+
 # グラフの見た目に関する設定
 label_font_size: 20   # ラベルのフォントサイズ(デフォルト: 12)
 tick_font_size: 15    # 目盛りのフォントサイズ(デフォルト: 10)
@@ -19,18 +24,18 @@ figure_height: 6      # 画像の高さ(デフォルト: 3)
 
 # 箱ひげ図への(外れ値を除いた)平均値の表示に関する設定
 # より詳細な設定を行う場合はscripts/plot_settings.pyのMEAN_PLOT_SETTINGSを編集のこと
-mean_marker_type: +    # 平均値のマーカーの種類(デフォルト: +)
+mean_marker_type: '+'  # 平均値のマーカーの種類(デフォルト: +)
 mean_marker_size: 10   # 平均値のマーカーのサイズ(デフォルト: 10)
 
 # 箱ひげ図の外れ値の表示に関する設定
 # より詳細な設定を行う場合はscripts/plot_settings.pyのOUTLIER_PLOT_SETTINGSを編集のこと
-outlier_marker_type: x   # 外れ値のマーカーの種類(デフォルト: x)
-outlier_marker_size: 10  # 外れ値のマーカーのサイズ(デフォルト: 10)
+outlier_marker_type: 'x'   # 外れ値のマーカーの種類(デフォルト: x)
+outlier_marker_size: 10    # 外れ値のマーカーのサイズ(デフォルト: 10)
 
 # 箱ひげ図への個別データのプロットに関する設定
 # より詳細な表示設定を行う場合はscripts/plot_settings.pyのSWARM_PLOT_SETTINGSを編集のこと
 show_individual: True     # 箱ひげ図に個別データをプロットするかどうか(デフォルト: True)
-jitter_marker_type: o     # 個別データのマーカーの種類(デフォルト: o)
+jitter_marker_type: 'o'   # 個別データのマーカーの種類(デフォルト: o)
 jitter_marker_alpha: 0.7  # 個別データのマーカーの透明度(デフォルト: 0.7)
 jitter_marker_size: 5     # 個別データのマーカーのサイズ(デフォルト: 5)
 
