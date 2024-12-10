@@ -4,12 +4,16 @@ import pandas as pd
 import yaml
 import schemeta_splitter.io as ss
 import trplots as trp
+from .plot_settings import (
+    BOX_PLOT_SETTINGS,
+    MEAN_PLOT_SETTINGS,
+    OUTLIER_PLOT_SETTINGS,
+    SWARM_PLOT_SETTINGS,
+    LINE_PLOT_SETTINGS,
+)
 
 VIS_ROOT_DIR = os.path.join(os.path.dirname(__file__), "..\\")
-INPUT_DIR = os.path.join(VIS_ROOT_DIR, "Inputs\\")
-OUTPUT_DIR = os.path.join(VIS_ROOT_DIR, "Outputs\\")
 CONFIG_YML = os.path.join(VIS_ROOT_DIR, "config.yml")
-INST_CSV = os.path.join(INPUT_DIR, "instructions.csv")
 
 
 def read_instructions():
