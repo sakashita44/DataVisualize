@@ -99,7 +99,7 @@ Input/にinstructions.csvを配置し，以下の通り記述する．
 
 ```csv
 
-output_name, filename, dtype, graph_type, xlim_min, xlim_max, ylim_min, ylim_max, xlabel, ylabel, legends, brackets, bracket_base_y
+output_name, filename, dtype, sample_filter, xlim_min, xlim_max, ylim_min, ylim_max, xlabel, ylabel, legends, brackets, bracket_base_y
 output1, data1.csv, wide, box, , , 20, 50, subject, value, (A:Apple)(B:Banana)(C:Cherry), ([X:A][X:B]*)([X:A][Y:A]**), 70
 output2, data2.csv, long, line, 0, 100, -10, 200, time, value, (True:A)(False:B)(:C), ,
 
@@ -110,7 +110,8 @@ output2, data2.csv, long, line, 0, 100, -10, 200, time, value, (True:A)(False:B)
 1. output_name: 出力ファイル名(**必須**，拡張子なし，png形式等で出力，ディレクトリ指定可能)
 1. filename: データファイル名(**必須**，拡張子あり，csv形式，visualize/Input/をルートとした相対パスで指定)
 1. dtype: データ形式(wide: ワイド形式，tp: 転置形式): [入力データ形式](### 入力データファイル形式)参照 (**必須**)
-1. graph_type: グラフの種類(box: 箱ひげ図，line: 折れ線グラフ) (**必須**)
+1. sample_filter: サンプルフィルター
+    * ここで指定した条件に合致するサンプル(`main_id`)のみをグラフ化する
 1. xlim_min: x軸の最小値 (graph_typeがlineの場合のみ有効)
     * minとmaxが同時に指定されていない場合は適用されない(以下min, max系は同様)
 1. xlim_max: x軸の最大値 (graph_typeがlineの場合のみ有効)
@@ -153,12 +154,13 @@ exampleファイル，brackets系は[参考画像](img/single_ex_description.png
 * メタデータ部分の列数は4列(uid, main_id, sub_id, group)，データ部分の列数は1列以上
     * メタデータの各列の意味
         * uid: ユニークID (ファイル内で一意のIDとして扱う)
-        * main_id: メインID (被験者番号等)
-        * sub_id: サブID (試行番号等)
+        * main_id: メインID (標本番号等)
+        * sub_id: サブID (標本内での識別子等)
         * group: グループ (比較条件等: (例: 介入群Aと対照群B等))
     * データ部分
         * graph_typeでboxを指定した場合: データ部分の1列目のみが使用される
         * graph_typeでlineを指定した場合: データ部分の列名がx軸，各列の値がy軸として使用される
+            * 列名をx軸として使用する都合上, 列名は内部で数値に変換される: 例にあげているdata1, data2, data3等の列名は使用できず，1, 2, 3等の列名を使用すること
         * いずれの場合も各行が1つのデータとして扱われる
 
 例: uid, main_id, sub_id, groupがメタデータ部分，data1, data2, data3がデータ部分の列名
@@ -183,6 +185,7 @@ uid, main_id, sub_id, group, data1, data2, data3, ...
 * instructions.csvのdtypeに"tp"を指定する
 * 形式: csv
 * ワイド形式の転置形式
+    * 注意点等はワイド形式と同様
 
 例
 

@@ -1,0 +1,3 @@
+output_name,filename,dtype,sample_filter,xlim_min,xlim_max,ylim_min,ylim_max,xlabel,ylabel,legends
+line_ex_1sample,tp-example.csv,tp,(1),0,100,-200,350,time,value(unit),(A:Apple)(B:Banana)(C:Cherry)
+line_ex_all,tp-example.csv,tp,,0,100,-200,350,time,value(unit),(A:Apple)(B:Banana)(C:Cherry)

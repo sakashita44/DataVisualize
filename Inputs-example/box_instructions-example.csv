@@ -1,0 +1,3 @@
+output_name,filename,dtype,sample_filter,ylim_min,ylim_max,xlabel,ylabel,legends,brackets,bracket_base_y
+box_each_ex,wide-example.csv,wide,(1)(2),15,90,subject,value(unit $m^2$),(A:Apple)(B:Banana)(C:Cherry),([X:A][X:B]*)([X:A][Y:A]**),75
+box_all_ex,wide-example.csv,wide,,15,90,subject,value(unit $m^2$),(A:Apple)(B:Banana)(C:Cherry),([X:A][X:B]*)([X:A][Y:A]**),75
