@@ -3,8 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import yaml
 import schemeta_splitter.io as ss
-
-import graph
+import trplots as trp
 
 VIS_ROOT_DIR = os.path.join(os.path.dirname(__file__), "..\\")
 INPUT_DIR = os.path.join(VIS_ROOT_DIR, "Inputs\\")
