@@ -25,7 +25,7 @@ class GraphConfig:
     mean_marker_size: int
     outlier_marker_type: str
     outlier_marker_size: int
-    show_individual: bool
+    show_jitter: bool
     jitter_marker_type: str
     jitter_marker_alpha: float
     jitter_marker_size: int

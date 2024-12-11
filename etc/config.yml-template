@@ -34,7 +34,7 @@ outlier_marker_size: 10    # 外れ値のマーカーのサイズ(デフォル�
 
 # 箱ひげ図への個別データのプロットに関する設定
 # より詳細な表示設定を行う場合はscripts/plot_settings.pyのSWARM_PLOT_SETTINGSを編集のこと
-show_individual: True     # 箱ひげ図に個別データをプロットするかどうか(デフォルト: True)
+show_jitter: True         # 箱ひげ図に個別データをプロットするかどうか(デフォルト: True)
 jitter_marker_type: 'o'   # 個別データのマーカーの種類(デフォルト: o)
 jitter_marker_alpha: 0.7  # 個別データのマーカーの透明度(デフォルト: 0.7)
 jitter_marker_size: 5     # 個別データのマーカーのサイズ(デフォルト: 5)
