@@ -1,8 +1,5 @@
 import os
-import re
 import matplotlib.pyplot as plt
-from numpy import long
-import pandas as pd
 from gen_graph import GenBoxGraph, GenLineGraph
 from data_processing import (
     read_box_instructions,
@@ -30,7 +27,7 @@ def gen_graph():
     line_instruction_path = os.path.join(VIS_ROOT_DIR, config.line_instruction_file)
 
     input_dir = os.path.join(VIS_ROOT_DIR, config.input_dir)
-    output_dir = os.path.join(VIS_ROOT_DIR, config.output_dir)
+    # output_dir = os.path.join(VIS_ROOT_DIR, config.output_dir)
 
     # instructionファイルの読み込み
     box_instructions = read_box_instructions(box_instruction_path)
