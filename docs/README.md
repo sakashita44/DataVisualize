@@ -112,6 +112,8 @@ output2, data2.csv, long, line, 0, 100, -10, 200, time, value, (True:A)(False:B)
 1. dtype: データ形式(wide: ワイド形式，tp: 転置形式): [入力データ形式](### 入力データファイル形式)参照 (**必須**)
 1. sample_filter: サンプルフィルター
     * ここで指定した条件に合致するサンプル(`main_id`)のみをグラフ化する
+    * なにも指定しない場合は全てのサンプルをグラフ化する
+        * なにも指定しない場合，bracketsのmain_id部分は無視される (何を指定してもgroupのみが判断される)
 1. xlim_min: x軸の最小値 (graph_typeがlineの場合のみ有効)
     * minとmaxが同時に指定されていない場合は適用されない(以下min, max系は同様)
 1. xlim_max: x軸の最大値 (graph_typeがlineの場合のみ有効)
@@ -121,7 +123,6 @@ output2, data2.csv, long, line, 0, 100, -10, 200, time, value, (True:A)(False:B)
 1. xlabel: x軸のラベル，$$で囲むことでLaTex数式記法使用可能 (**必須**)
 1. ylabel: y軸のラベル，$$で囲むことでLaTex数式記法使用可能 (**必須**)
 1. legends: 入力csvの列名と凡例の対応表(コロンで対応, ()で囲むことで複数指定可能)
-    * ここで指定した凡例の順番でグラフに表示される
     * 例: TrueをA，FalseをB，空文字をCというラベルにしたい場合: `(True:A)(False:B)(:C)`
     * **注意**: データファイルの列名でTRUE/FALSEを使用している場合，True/Falseとして認識されるので注意
         * Bool型で読み取られた後に文字列に変換されるため
@@ -137,6 +138,7 @@ output2, data2.csv, long, line, 0, 100, -10, 200, time, value, (True:A)(False:B)
     * 例: `([X:A][X:B]*)([X:A][Y:A]**)` は以下の通り
         1. `[X:A][X:B]*` : XのA群とXのB群の間に有意差を示す線と*が表示される
         1. `[X:A][Y:A]**` : XのA群とYのA群の間に有意差を示す線と**が表示される
+    * もしsample_filterになにも指定していない場合は，main_id部分に何を指定してもいい
 1. bracket_base_y: 箱ひげ図の有意差を示す線の最低y座標
     * データの最大値より大きい値を指定することを推奨
 

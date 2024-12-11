@@ -1,3 +1,4 @@
+from token import RPAR
 import trplots as trp
 
 from data_processing import convert_data_to_lineplot
@@ -91,9 +92,15 @@ class GenBoxGraph:
         # dataからsample_filterに従ってデータを抽出(xに一致するデータを抽出)
         if len(self._sample_filter) > 0:
             self._data = self._data[self._data[x].isin(self._sample_filter)]
+            order = self._sample_filter
         else:
             # sample_filterが空の場合は全データを使用 (xをすべて""に書き換える)
             self._data[x] = ""
+            order = None
+            # bracketsの要素を書き換え
+            for bracket in self._brackets:
+                bracket[0][0] = ""
+                bracket[1][0] = ""
 
         box_trp = trp.TrendPlots(self._ax)
         box_trp.add_box_mean_plot(
@@ -105,7 +112,7 @@ class GenBoxGraph:
             jitter_setting=swarm_kwargs,
             mean_setting=mean_kwargs,
             flierprops=outlier_kwargs,
-            order=self._sample_filter,
+            order=order,
             **box_kwargs,
         )
         box_trp.add_brackets(

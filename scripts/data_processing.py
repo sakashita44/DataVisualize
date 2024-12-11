@@ -106,7 +106,7 @@ def process_legend(legend: str) -> dict:
     for item in legend_tmp:
         # :で分割
         key, value = item.split(":")
-        legend_dict[key.strip()] = value.strip()
+        legend_dict[str(key.strip())] = str(value.strip())
     return legend_dict
 
 
@@ -135,7 +135,13 @@ def process_brackets(brackets: str) -> List[List]:
             i = i.split(":")
             # iのすべての要素をstrip
             i = [j.strip() for j in i]
+            # iのすべての要素をstrに変換
+            i = [str(j) for j in i]
             item_list.append(i)
+            # item_listは[['a', 'b'], ['c', 'd'], ['*']]のようなリストになっている
+        item_list[2] = item_list[2][0]
+        # item_listを全体をlistからtupleに変換
+        item_list = tuple(item_list)
         brackets_list.append(item_list)
     return brackets_list
 
