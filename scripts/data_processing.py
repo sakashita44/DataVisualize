@@ -168,6 +168,9 @@ def convert_data_to_lineplot(data, sample_row_id, group_row_id, sample_filter=[]
     # dataのindexをfloatに変換
     data.index = data.index.astype(float)
 
+    # dataの値をfloatに変換
+    data = data.astype(float)
+
     return data
 
 

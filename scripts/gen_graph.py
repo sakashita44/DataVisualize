@@ -1,4 +1,3 @@
-from token import RPAR
 import trplots as trp
 
 from data_processing import convert_data_to_lineplot
