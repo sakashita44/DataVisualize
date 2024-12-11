@@ -1,5 +1,8 @@
+from random import sample
 import pandas as pd
 import trplots as trp
+
+from data_processing import convert_data_to_lineplot
 from plot_settings import (
     BOX_PLOT_SETTINGS,
     MEAN_PLOT_SETTINGS,
@@ -12,7 +15,6 @@ from plot_settings import (
 def gen_box_graph(
     ax,
     data,
-    sample_filter,
     is_add_jitter,
     brackets,
     bracket_base_y,
@@ -23,6 +25,7 @@ def gen_box_graph(
     y_col_id=3,
     hue_col_id=2,
     hue_order=None,
+    sample_filter=[],
 ):
     """
     Args:
@@ -30,7 +33,7 @@ def gen_box_graph(
             boxplotを描画するAxes
         data: pd.DataFrame
             描画するデータ (列名はx_col_id, y_col_id, hue_col_idで指定)
-            schemeta_splitterで定義されるワイド形式を推奨
+            schemeta_splitterで定義されるワイド形式にのみ対応 (この場合x_col_id, y_col_id, hue_col_idは0, 3, 2で固定)
         sample_filter:
             描画するデータのサンプル名のリスト(hue_col_idで指定される列の値)
             このリストの順番で描画される
@@ -75,8 +78,6 @@ def gen_box_graph(
     # dataからsample_filterに従ってデータを抽出(xに一致するデータを抽出)
     if len(sample_filter) > 0:
         data = data[data[x].isin(sample_filter)]
-        # dataをsample_filterの順に並び替える
-        data[x] = pd.Categorical(data[x], categories=sample_filter, ordered=True)
     else:
         # sample_filterが空の場合は全データを使用 (xをすべて""に書き換える)
         data[x] = ""
@@ -91,6 +92,7 @@ def gen_box_graph(
         jitter_setting=swarm_kwargs,
         mean_setting=mean_kwargs,
         flierprops=outlier_kwargs,
+        order=sample_filter,
         **box_kwargs,
     )
     box_trp.add_brackets(
@@ -104,39 +106,75 @@ def gen_box_graph(
     return box_trp.ax
 
 
-def gen_line_mean_sd_graph(ax, data, order=None):
+def gen_line_mean_sd_graph(
+    ax, data, sample_filter=[], order=None, sample_row_id=0, group_row_id=2
+):
     """
     Args:
         ax: matplotlib.axes.Axes
             lineplotを描画するAxes
         data: pd.DataFrame
             描画するデータ
+            schemeta_splitterで定義される転地形式にのみ対応
+        sample_filter:
+            描画するデータのサンプル名のリスト
+            空の場合は全データを使用
+        sample_row_id:
+            dataのsample行のインデックス (schemeta_splitterで定義される転地形式のmain_idに対応: 0)
+        group_row_id:
+            dataのgroup行のインデックス (schemeta_splitterで定義される転地形式のgroupに対応: 2)
         order: List[str]
             描画するデータの順序
-            dataの列名のユニークな値のリスト
+            group行のユニークな値のリスト
+
+    Returns:
+        ax: matplotlib.axes.Axes
+            lineplotが描画されたAxes
     """
     line_kwargs = LINE_PLOT_SETTINGS.copy()
 
+    long_data = convert_data_to_lineplot(
+        data, sample_row_id, group_row_id, sample_filter
+    )
+
     line_trp = trp.TrendPlots(ax)
-    line_trp.add_line_mean_sd_plot(data=data, order=order, **line_kwargs)
+    line_trp.add_line_mean_sd_plot(data=long_data, order=order, **line_kwargs)
 
     return line_trp.ax
 
 
-def gen_individual_line_graph(ax, data, order=None):
+def gen_individual_line_graph(
+    ax, data, sample_filter=[], order=None, sample_row_id=0, group_row_id=2
+):
     """
     Args:
         ax: matplotlib.axes.Axes
             lineplotを描画するAxes
         data: pd.DataFrame
             描画するデータ
+            schemeta_splitterで定義される転地形式にのみ対応
+        sample_filter:
+            描画するデータのサンプル名のリスト
+            空の場合は全データを使用
+        sample_row_id:
+            dataのsample行のインデックス (schemeta_splitterで定義される転地形式のmain_idに対応: 0)
+        group_row_id:
+            dataのgroup行のインデックス (schemeta_splitterで定義される転地形式のgroupに対応: 2)
         order: List[str]
             描画するデータの順序
-            dataの列名のユニークな値のリスト
+            group行のユニークな値のリスト
+
+    Returns:
+        ax: matplotlib.axes.Axes
+            lineplotが描画されたAxes
     """
     line_kwargs = LINE_PLOT_SETTINGS.copy()
 
+    long_data = convert_data_to_lineplot(
+        data, sample_row_id, group_row_id, sample_filter
+    )
+
     line_trp = trp.TrendPlots(ax)
-    line_trp.add_line_group_coloring_plot(data=data, order=order, **line_kwargs)
+    line_trp.add_line_group_coloring_plot(data=long_data, order=order, **line_kwargs)
 
     return line_trp.ax
