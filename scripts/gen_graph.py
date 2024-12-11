@@ -22,6 +22,7 @@ def gen_box_graph(
     x_col_id=0,
     y_col_id=3,
     hue_col_id=2,
+    hue_order=None,
 ):
     """
     Args:
@@ -32,6 +33,7 @@ def gen_box_graph(
             schemeta_splitterで定義されるワイド形式を推奨
         sample_filter:
             描画するデータのサンプル名のリスト(hue_col_idで指定される列の値)
+            このリストの順番で描画される
             空の場合は全データを使用
         is_add_jitter:
             boxplotにjitterを追加するかどうか
@@ -60,6 +62,7 @@ def gen_box_graph(
             boxplotが描画されたAxes
     """
     box_kwargs = BOX_PLOT_SETTINGS.copy()
+    box_kwargs["hue_order"] = hue_order
     mean_kwargs = MEAN_PLOT_SETTINGS.copy()
     outlier_kwargs = OUTLIER_PLOT_SETTINGS.copy()
     swarm_kwargs = SWARM_PLOT_SETTINGS.copy()
@@ -101,8 +104,17 @@ def gen_box_graph(
     return box_trp.ax
 
 
-def gen_line_mean_sd_graph(ax):
-    """ """
+def gen_line_mean_sd_graph(ax, data, order=None):
+    """
+    Args:
+        ax: matplotlib.axes.Axes
+            lineplotを描画するAxes
+        data: pd.DataFrame
+            描画するデータ
+        order: List[str]
+            描画するデータの順序
+            dataの列名のユニークな値のリスト
+    """
     line_kwargs = LINE_PLOT_SETTINGS.copy()
 
     line_trp = trp.TrendPlots(ax)
@@ -111,8 +123,17 @@ def gen_line_mean_sd_graph(ax):
     return line_trp.ax
 
 
-def gen_individual_line_graph(ax):
-    """ """
+def gen_individual_line_graph(ax, data, order=None):
+    """
+    Args:
+        ax: matplotlib.axes.Axes
+            lineplotを描画するAxes
+        data: pd.DataFrame
+            描画するデータ
+        order: List[str]
+            描画するデータの順序
+            dataの列名のユニークな値のリスト
+    """
     line_kwargs = LINE_PLOT_SETTINGS.copy()
 
     line_trp = trp.TrendPlots(ax)
