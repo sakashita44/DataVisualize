@@ -141,14 +141,15 @@ def process_brackets(brackets: str) -> List[List]:
 def convert_data_to_lineplot(data, sample_row_id, group_row_id, sample_filter=[]):
     # sample_filterで指定されたサンプルのデータのみを抽出
     if len(sample_filter) > 0:
-        # dataのsample_row_id行の値がsample_filterに含まれる列のみを抽出
-        data = data[data.iloc[:, sample_row_id].isin(sample_filter)]
+        # dataのsample_row_id行目の値がsample_filterに含まれない列を削除
+        data = data.loc[:, data.iloc[sample_row_id, :].isin(sample_filter)]
+
     else:
         # sample_filterが空の場合はデータをそのまま使用
         pass
 
     # dataのgroup_row_id行の値を取得しlistに変換
-    groups = data.iloc[:, group_row_id].unique().tolist()
+    groups = data.iloc[group_row_id, :].tolist()
 
     # dataの上から3行を削除
     data = data.iloc[3:, :]
