@@ -187,3 +187,13 @@ def read_schemeta_data(path: str, dtype: str, graph_type: str) -> pd.DataFrame:
     )
 
     return concat_df
+
+
+def get_order(legends):
+    # legendの指定がある場合はorderを指定
+    if legends != {}:
+        order = list(legends.keys())
+    else:
+        order = None
+
+    return order
