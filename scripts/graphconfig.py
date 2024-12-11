@@ -5,7 +5,8 @@ from dataclasses import dataclass
 class GraphConfig:
     input_dir: str
     output_dir: str
-    instruction_file: str
+    box_instruction_file: str
+    line_instruction_file: str
     label_font_size: int
     tick_font_size: int
     legend_font_size: int
