@@ -7,4 +7,4 @@ Set-Location $PSScriptRoot
 . .\.venv\Scripts\Activate.ps1
 
 # Execute graph_generator.py
-python .\src\graph_generator.py
+python .\scripts\graph_generator.py
