@@ -1,7 +1,9 @@
+import pandas as pd
 import yaml
 import csv
 import re
 from typing import List
+import schemeta_splitter.io as ss
 
 from graphconfig import GraphConfig
 from graphinstruction import BoxGraphInstruction, LineGraphInstruction
@@ -161,3 +163,27 @@ def convert_data_to_lineplot(data, sample_row_id, group_row_id, sample_filter=[]
     data.index = data.index.astype(float)
 
     return data
+
+
+def read_schemeta_data(path: str, dtype: str, graph_type: str) -> pd.DataFrame:
+    if dtype == "tp":
+        is_wide = False
+    elif dtype == "wide":
+        is_wide = True
+    else:
+        raise ValueError(f"dtype {dtype} is not supported")
+
+    meta_df, data_df = ss.read_file(file_path=path, is_wide_format=is_wide)
+
+    if graph_type == "box":
+        get_wide_format = True
+    elif graph_type == "line":
+        get_wide_format = False
+    else:
+        raise ValueError(f"graph_type {graph_type} is not supported")
+
+    concat_df = ss.concatenate_dataframes(
+        meta_df=meta_df, data_df=data_df, get_wide_format=get_wide_format
+    )
+
+    return concat_df
