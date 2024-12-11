@@ -6,5 +6,5 @@ Set-Location $PSScriptRoot
 # Activate the virtual environment
 . .\.venv\Scripts\Activate.ps1
 
-# Execute gen_graph.py
-python .\src\gen_graph.py
+# Execute graph_generator.py
+python .\src\graph_generator.py
