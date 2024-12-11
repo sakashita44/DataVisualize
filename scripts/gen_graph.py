@@ -1,5 +1,3 @@
-from random import sample
-import pandas as pd
 import trplots as trp
 
 from data_processing import convert_data_to_lineplot
